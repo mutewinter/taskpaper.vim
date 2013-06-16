@@ -273,9 +273,14 @@ function! taskpaper#put(...)
         let &l:foldenable = save_fen
         return 0
     endif
+    let end = taskpaper#search_end_of_item(line('.'))
+    call cursor(end, 1)
 
     if indent > 0
         let project_depth = len(matchstr(getline('.'), '^\t*'))
+        if match(getline('.'), '^\t*-') >= 0
+            let project_depth = project_depth - 1
+        endif
         let tabs = repeat("\t", project_depth + indent)
     else
         let tabs = ''
