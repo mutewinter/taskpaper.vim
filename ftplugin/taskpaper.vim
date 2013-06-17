@@ -81,6 +81,8 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     \       :call taskpaper#toggle_tag('today', '')<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperMoveToProject
     \       :call taskpaper#move_to_project()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperMoveToEnd
+    \       :call taskpaper#move_to_end()<CR>
 
     nnoremap <silent> <buffer> <Plug>TaskPaperNewline
     \       o<C-r>=taskpaper#newline()<CR>
@@ -105,6 +107,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nmap <buffer> <Leader>tt <Plug>TaskPaperToggleToday
     nmap <buffer> <Leader>tx <Plug>TaskPaperToggleCancelled
     nmap <buffer> <Leader>tm <Plug>TaskPaperMoveToProject
+    nmap <buffer> <Leader>tr <Plug>TaskPaperMoveToEnd
 
     if mapcheck("o", "n") == ''
         nmap <buffer> o <Plug>TaskPaperNewline

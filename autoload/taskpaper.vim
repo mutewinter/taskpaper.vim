@@ -324,6 +324,27 @@ function! taskpaper#move_to_project()
     call taskpaper#move(split(res, ':'))
 endfunction
 
+function! taskpaper#move_to_end()
+    let lnum = line('.')
+
+    let save_fen = &l:foldenable
+    setlocal nofoldenable
+
+    let reg = 'a'
+    let save_reg = [getreg(reg), getregtype(reg)]
+
+    let nlines = taskpaper#delete(lnum, reg, 0)
+    let end = taskpaper#search_end_of_item(search('^\t*\zs.\+:\(\s\+@[^\s(]\+\(([^)]*)\)\?\)*$', 'bw'))
+    call cursor(end, 1)
+    execute 'put' reg
+
+    let &l:foldenable = save_fen
+    call setreg(reg, save_reg[0], save_reg[1])
+        if g:task_paper_follow_move == 0
+            execute lnum
+        endif
+endfunction
+
 function! taskpaper#update_project()
     let indent = matchstr(getline("."), '^\t*')
     let depth = len(indent)
