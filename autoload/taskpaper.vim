@@ -263,8 +263,9 @@ endfunction
 
 function! taskpaper#put(...)
     let projects = a:0 > 0 ? a:1 : []
-    let reg = a:0 > 1 ? a:2 : '"'
-    let indent = a:0 > 2 ? a:3 : 0
+    let beginning = a:0 > 1 ? a:2 : 0
+    let reg = a:0 > 2 ? a:3 : '"'
+    let indent = a:0 > 3 ? a:4 : 0
 
     let save_fen = &l:foldenable
     setlocal nofoldenable
@@ -273,8 +274,10 @@ function! taskpaper#put(...)
         let &l:foldenable = save_fen
         return 0
     endif
-    let end = taskpaper#search_end_of_item(line('.'))
-    call cursor(end, 1)
+    if beginning == 0
+        let end = taskpaper#search_end_of_item(line('.'))
+        call cursor(end, 1)
+    endif
 
     if indent > 0
         let project_depth = len(matchstr(getline('.'), '^\t*'))
@@ -295,7 +298,8 @@ function! taskpaper#put(...)
 endfunction
 
 function! taskpaper#move(projects, ...)
-    let lnum = a:0 > 0 ? a:1 : line('.')
+    let beginning = a:0 > 0 ? a:1 : 0
+    let lnum = a:0 > 1 ? a:2 : line('.')
 
     let save_fen = &l:foldenable
     setlocal nofoldenable
@@ -309,7 +313,7 @@ function! taskpaper#move(projects, ...)
     let save_reg = [getreg(reg), getregtype(reg)]
 
     let nlines = taskpaper#delete(lnum, reg, 1)
-    call taskpaper#put(a:projects, reg, 1)
+    call taskpaper#put(a:projects, beginning, reg, 1)
 
     let &l:foldenable = save_fen
     call setreg(reg, save_reg[0], save_reg[1])
@@ -319,9 +323,14 @@ function! taskpaper#move(projects, ...)
     return nlines
 endfunction
 
-function! taskpaper#move_to_project()
-    let res = input('Project: ', '', 'customlist,taskpaper#complete_project')
-    call taskpaper#move(split(res, ':'))
+function! taskpaper#append_to_project()
+    let res = input('Append to project: ', '', 'customlist,taskpaper#complete_project')
+    call taskpaper#move(split(res, ':'), 0)
+endfunction
+
+function! taskpaper#insert_under_project()
+    let res = input('Insert under project: ', '', 'customlist,taskpaper#complete_project')
+    call taskpaper#move(split(res, ':'), 1)
 endfunction
 
 function! taskpaper#move_to_end()
@@ -417,7 +426,7 @@ function! taskpaper#archive_done()
     endif
 
     if deleted != 0
-        call taskpaper#put([g:task_paper_archive_project], 'a', 1)
+        call taskpaper#put([g:task_paper_archive_project], 0, 'a', 1)
     else
         echo 'No done items.'
     endif
