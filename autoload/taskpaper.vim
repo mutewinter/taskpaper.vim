@@ -384,6 +384,7 @@ function! taskpaper#update_project()
 endfunction
 
 function! taskpaper#archive_done()
+    let here = line('.')
     let archive_start = search('^' . g:task_paper_archive_project . ':', 'cw')
     if archive_start == 0
         call append('$', g:task_paper_archive_project . ':')
@@ -434,6 +435,7 @@ function! taskpaper#archive_done()
     let &l:foldenable = save_fen
     call setreg('a', save_reg[0], save_reg[1])
 
+    execute here
     return deleted
 endfunction
 
