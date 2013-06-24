@@ -595,4 +595,20 @@ function! taskpaper#tag_style_dict(tsd)
     endfor
 endfunction
 
+function! taskpaper#new_task()
+    let task = input('New task: ', '')
+    let save_fen = &l:foldenable
+    let lnum = line('.')
+    setlocal nofoldenable
+    let end = taskpaper#search_end_of_item(search('^' . g:task_paper_new_project . ':', 'cw'))
+    call cursor(end, 1)
+    let task = "\t- " . task
+    put =task
+
+    let &l:foldenable = save_fen
+    if g:task_paper_follow_move == 0
+        execute lnum
+    endif
+endfunction
+
 let &cpo = s:save_cpo

@@ -22,6 +22,11 @@ if !exists('g:task_paper_archive_project')
     let g:task_paper_archive_project = "Archive"
 endif
 
+" Define a default new project name
+if !exists('g:task_paper_new_project')
+    let g:task_paper_new_project = "New"
+endif
+
 " When moving a task, should the cursor follow or stay in the same place
 " (default: follow)
 if !exists('g:task_paper_follow_move')
@@ -85,6 +90,8 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     \       :call taskpaper#append_to_project()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperMoveToEnd
     \       :call taskpaper#move_to_end()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperNewTask
+    \       :call taskpaper#new_task()<CR>
 
     nnoremap <silent> <buffer> <Plug>TaskPaperNewline
     \       o<C-r>=taskpaper#newline()<CR>
@@ -111,6 +118,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nmap <buffer> <Leader>ti <Plug>TaskPaperInsertUnderProject
     nmap <buffer> <Leader>ta <Plug>TaskPaperAppendToProject
     nmap <buffer> <Leader>tr <Plug>TaskPaperMoveToEnd
+    nmap <buffer> <Leader>tn <Plug>TaskPaperNewTask
 
     if mapcheck("o", "n") == ''
         nmap <buffer> o <Plug>TaskPaperNewline
