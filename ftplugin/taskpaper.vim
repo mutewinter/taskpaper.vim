@@ -88,6 +88,8 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     \       :call taskpaper#insert_under_project()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperAppendToProject
     \       :call taskpaper#append_to_project()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperReEnterTask
+    \       :call taskpaper#re_enter_task()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperMoveToEnd
     \       :call taskpaper#move_to_end()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperNewTask
@@ -117,7 +119,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nmap <buffer> <Leader>tx <Plug>TaskPaperToggleCancelled
     nmap <buffer> <Leader>ti <Plug>TaskPaperInsertUnderProject
     nmap <buffer> <Leader>ta <Plug>TaskPaperAppendToProject
-    nmap <buffer> <Leader>tr <Plug>TaskPaperMoveToEnd
+    nmap <buffer> <Leader>tr <Plug>TaskPaperReEnterTask
     nmap <buffer> <Leader>tn <Plug>TaskPaperNewTask
 
     if mapcheck("o", "n") == ''

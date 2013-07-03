@@ -354,6 +354,13 @@ function! taskpaper#move_to_end()
         endif
 endfunction
 
+function! taskpaper#re_enter_task()
+    let task = getline('.')
+    call taskpaper#add_tag('re-entered', taskpaper#date())
+    put =task
+    call taskpaper#move_to_end()
+endfunction
+
 function! taskpaper#update_project()
     let indent = matchstr(getline("."), '^\t*')
     let depth = len(indent)
@@ -405,7 +412,10 @@ function! taskpaper#archive_done()
     while 1
         let lnum = search('@done', 'W', archive_start - deleted)
         if lnum == 0
-            break
+            let lnum = search('@re-entered', 'W', archive_start - deleted)
+            if lnum == 0
+                break
+            endif
         endif
 
         call taskpaper#update_project()
@@ -418,7 +428,10 @@ function! taskpaper#archive_done()
         while 1
             let lnum = search('@done', 'W')
             if lnum == 0
-                break
+                let lnum = search('@re-entered', 'W', archive_start - deleted)
+                if lnum == 0
+                    break
+                endif
             endif
 
             call taskpaper#update_project()
