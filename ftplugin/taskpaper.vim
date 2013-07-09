@@ -80,6 +80,9 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     \       :<C-u>call taskpaper#search_tag('cancelled')<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperToggleCancelled
     \       :call taskpaper#toggle_tag('cancelled', taskpaper#date())<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperMarkDone
+    \       :call taskpaper#delete_tag('today')<CR>
+    \       :call taskpaper#add_tag('done', taskpaper#date())<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperToggleDone
     \       :call taskpaper#toggle_tag('done', taskpaper#date())<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperToggleToday
@@ -89,6 +92,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nnoremap <silent> <buffer> <Plug>TaskPaperAppendToProject
     \       :call taskpaper#append_to_project()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperReEnterTask
+    \       :call taskpaper#delete_tag('today')<CR>
     \       :call taskpaper#re_enter_task()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperMoveToEnd
     \       :call taskpaper#move_to_end()<CR>
@@ -114,7 +118,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nmap <buffer> <Leader>tD <Plug>TaskPaperArchiveDone
     nmap <buffer> <Leader>tT <Plug>TaskPaperShowToday
     nmap <buffer> <Leader>tX <Plug>TaskPaperShowCancelled
-    nmap <buffer> <Leader>td <Plug>TaskPaperToggleDone
+    nmap <buffer> <Leader>td <Plug>TaskPaperMarkDone
     nmap <buffer> <Leader>tt <Plug>TaskPaperToggleToday
     nmap <buffer> <Leader>tx <Plug>TaskPaperToggleCancelled
     nmap <buffer> <Leader>ti <Plug>TaskPaperInsertUnderProject
