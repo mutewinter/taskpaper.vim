@@ -410,12 +410,9 @@ function! taskpaper#archive_done()
     let deleted = 0
 
     while 1
-        let lnum = search('@done', 'W', archive_start - deleted)
+        let lnum = search('@done\|@re-entered', 'W', archive_start - deleted)
         if lnum == 0
-            let lnum = search('@re-entered', 'W', archive_start - deleted)
-            if lnum == 0
-                break
-            endif
+            break
         endif
 
         call taskpaper#update_project()
@@ -426,12 +423,9 @@ function! taskpaper#archive_done()
         call cursor(archive_end, 1)
 
         while 1
-            let lnum = search('@done', 'W')
+            let lnum = search('@done\|@re-entered', 'W')
             if lnum == 0
-                let lnum = search('@re-entered', 'W', archive_start - deleted)
-                if lnum == 0
-                    break
-                endif
+                break
             endif
 
             call taskpaper#update_project()
