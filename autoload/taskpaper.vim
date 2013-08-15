@@ -7,6 +7,20 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+fun! Mark(...)
+  if a:0 == 0
+    let mark = line(".") . "G" . virtcol(".") . "|"
+    normal! H
+    let mark = "normal!" . line(".") . "Gzt" . mark
+    execute mark
+    return mark
+  elseif a:0 == 1
+    return "normal!" . a:1 . "G1|"
+  else
+    return "normal!" . a:1 . "G" . a:2 . "|"
+  endif
+endfun
+
 function! s:add_delete_tag(tag, value, add)
     let cur_line = getline(".")
 
@@ -300,7 +314,7 @@ endfunction
 function! taskpaper#move(projects, ...)
     let beginning = a:0 > 0 ? a:1 : 0
     let lnum = a:0 > 1 ? a:2 : line('.')
-
+    let mark = Mark()
     let save_fen = &l:foldenable
     setlocal nofoldenable
 
@@ -318,7 +332,7 @@ function! taskpaper#move(projects, ...)
     let &l:foldenable = save_fen
     call setreg(reg, save_reg[0], save_reg[1])
         if g:task_paper_follow_move == 0
-            execute lnum
+            execute mark
         endif
     return nlines
 endfunction
@@ -335,7 +349,7 @@ endfunction
 
 function! taskpaper#move_to_end()
     let lnum = line('.')
-
+    let mark = Mark()
     let save_fen = &l:foldenable
     setlocal nofoldenable
 
@@ -350,7 +364,7 @@ function! taskpaper#move_to_end()
     let &l:foldenable = save_fen
     call setreg(reg, save_reg[0], save_reg[1])
         if g:task_paper_follow_move == 0
-            execute lnum
+            execute mark
         endif
 endfunction
 
@@ -605,7 +619,7 @@ endfunction
 function! taskpaper#new_task()
     let task = input('New task: ', '')
     let save_fen = &l:foldenable
-    let lnum = line('.')
+    let mark = Mark()
     setlocal nofoldenable
     let end = taskpaper#search_end_of_item(search('^' . g:task_paper_new_project . ':', 'cw'))
     call cursor(end, 1)
@@ -614,7 +628,7 @@ function! taskpaper#new_task()
 
     let &l:foldenable = save_fen
     if g:task_paper_follow_move == 0
-        execute lnum
+        execute mark
     endif
 endfunction
 
