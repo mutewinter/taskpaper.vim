@@ -37,8 +37,8 @@ syn sync fromstart
 HiLink taskpaperListItem      Identifier
 HiLink taskpaperContext       Identifier
 HiLink taskpaperProject       Title
-HiLink taskpaperDone          NonText
-HiLink taskpaperReEntered     NonText
+HiLink taskpaperDone          Statement
+HiLink taskpaperReEntered     Statement
 HiLink taskpaperCancelled     NonText
 HiLink taskpaperComment       Comment
 
