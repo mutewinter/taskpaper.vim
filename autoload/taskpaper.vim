@@ -375,6 +375,13 @@ function! taskpaper#re_enter_task()
     call taskpaper#move_to_end()
 endfunction
 
+function! taskpaper#re_enter_task_unfinished()
+    let task = getline('.')
+    call taskpaper#add_tag('re-entered', taskpaper#date())
+    put =task
+    call taskpaper#move([g:task_paper_unfinished_project], 0)
+endfunction
+
 function! taskpaper#update_project()
     let indent = matchstr(getline("."), '^\t*')
     let depth = len(indent)

@@ -27,6 +27,11 @@ if !exists('g:task_paper_new_project')
     let g:task_paper_new_project = "New"
 endif
 
+" Define a default unfinished project name
+if !exists('g:task_paper_unfinished_project')
+    let g:task_paper_unfinished_project = "Unfinished"
+endif
+
 " When moving a task, should the cursor follow or stay in the same place
 " (default: follow)
 if !exists('g:task_paper_follow_move')
@@ -94,6 +99,9 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nnoremap <silent> <buffer> <Plug>TaskPaperReEnterTask
     \       :call taskpaper#delete_tag('today')<CR>
     \       :call taskpaper#re_enter_task()<CR>
+    nnoremap <silent> <buffer> <Plug>TaskPaperReEnterUnfinished
+    \       :call taskpaper#delete_tag('today')<CR>
+    \       :call taskpaper#re_enter_task_unfinished()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperMoveToEnd
     \       :call taskpaper#move_to_end()<CR>
     nnoremap <silent> <buffer> <Plug>TaskPaperNewTask
@@ -123,6 +131,7 @@ if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nmap <buffer> <Leader>tx <Plug>TaskPaperToggleCancelled
     nmap <buffer> <Leader>ti <Plug>TaskPaperInsertUnderProject
     nmap <buffer> <Leader>ta <Plug>TaskPaperAppendToProject
+    nmap <buffer> <Leader>tu <Plug>TaskPaperReEnterUnfinished
     nmap <buffer> <Leader>tr <Plug>TaskPaperReEnterTask
     nmap <buffer> <Leader>tn <Plug>TaskPaperNewTask
 
