@@ -56,6 +56,8 @@ setlocal fo-=c fo+=rol
 " Set 'autoindent' to maintain indent level
 setlocal autoindent
 
+setlocal listchars+=tab:\ \ " Show tabs as spaces for cleanliness
+
 " Set up mappings
 if !exists("no_plugin_maps") && !exists("no_taskpaper_maps")
     nnoremap <silent> <buffer> <Plug>TaskPaperFoldProjects
